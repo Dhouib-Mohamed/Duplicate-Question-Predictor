@@ -1,14 +1,51 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from keras.layers import Input, Dense, Dropout, Embedding, LSTM, concatenate
+from keras.models import Model
+from keras.optimizers import Adam
 from sklearn import tree
+
+
+def create_model(vocab_size, embedding_dim, input_length):
+    # Input layer
+    input_1 = Input(shape=(input_length,))
+    input_2 = Input(shape=(input_length,))
+
+    # Embedding layer
+    embedding_layer = Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length=input_length)
+
+    # LSTM layer
+    lstm_layer = LSTM(units=128, dropout=0.2, recurrent_dropout=0.2)
+
+    # Branch 1
+    x1 = embedding_layer(input_1)
+    x1 = lstm_layer(x1)
+    x1 = Dropout(0.2)(x1)
+
+    # Branch 2
+    x2 = embedding_layer(input_2)
+    x2 = lstm_layer(x2)
+    x2 = Dropout(0.2)(x2)
+
+    # Merge the two branches
+    merged = concatenate([x1, x2])
+    merged = Dense(units=64, activation='relu')(merged)
+    merged = Dropout(0.2)(merged)
+    merged = Dense(units=1, activation='sigmoid')(merged)
+
+    # Create the model
+    model = Model(inputs=[input_1, input_2], outputs=merged)
+    model.compile(loss='binary_crossentropy', optimizer=Adam(lr=0.001), metrics=['accuracy'])
+    return model
+
 
 def logisticRegressionSummary(model, column_names):
     '''Show a summary of the trained logistic regression model'''
 
     # Get a list of class names
     numclasses = len(model.classes_)
-    if len(model.classes_)==2:
-        classes =  [model.classes_[1]] # if we have 2 classes, sklearn only shows one set of coefficients
+    if len(model.classes_) == 2:
+        classes = [model.classes_[1]]  # if we have 2 classes, sklearn only shows one set of coefficients
     else:
         classes = model.classes_
 
