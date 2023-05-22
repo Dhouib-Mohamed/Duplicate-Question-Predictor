@@ -1,41 +1,39 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from keras.layers import Input, Dense, Dropout, Embedding, LSTM, concatenate
+from keras.layers import Input, LSTM, Dropout, concatenate, Dense, Reshape
 from keras.models import Model
-from keras.optimizers import Adam
 from sklearn import tree
 
 
-def create_model(vocab_size, embedding_dim, input_length):
-    # Input layer
+def create_model(input_length, lstm_units=128, dense_units=64):
+    # Define inputs
     input_1 = Input(shape=(input_length,))
     input_2 = Input(shape=(input_length,))
 
-    # Embedding layer
-    embedding_layer = Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length=input_length)
+    # Reshape inputs for LSTM layer
+    reshaped_input_1 = Reshape((input_length, 1))(input_1)
+    reshaped_input_2 = Reshape((input_length, 1))(input_2)
 
     # LSTM layer
-    lstm_layer = LSTM(units=128, dropout=0.2, recurrent_dropout=0.2)
+    lstm_layer = LSTM(units=lstm_units, dropout=0.2, recurrent_dropout=0.2)
 
     # Branch 1
-    x1 = embedding_layer(input_1)
-    x1 = lstm_layer(x1)
+    x1 = lstm_layer(reshaped_input_1)
     x1 = Dropout(0.2)(x1)
 
     # Branch 2
-    x2 = embedding_layer(input_2)
-    x2 = lstm_layer(x2)
+    x2 = lstm_layer(reshaped_input_2)
     x2 = Dropout(0.2)(x2)
 
     # Merge the two branches
     merged = concatenate([x1, x2])
-    merged = Dense(units=64, activation='relu')(merged)
+    merged = Dense(units=dense_units, activation='relu')(merged)
     merged = Dropout(0.2)(merged)
     merged = Dense(units=1, activation='sigmoid')(merged)
 
     # Create the model
     model = Model(inputs=[input_1, input_2], outputs=merged)
-    model.compile(loss='binary_crossentropy', optimizer=Adam(lr=0.001), metrics=['accuracy'])
+    model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
     return model
 
 
