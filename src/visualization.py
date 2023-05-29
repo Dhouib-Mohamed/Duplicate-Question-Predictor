@@ -1,5 +1,3 @@
-# Library of Functions for the OpenClassrooms Supervised Learning Course
-
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
