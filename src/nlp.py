@@ -8,8 +8,9 @@ lemmatizer = spacy.load("en_core_web_sm")
 punctuation = list(punctuation)
 
 
-def tokenize(sentence, pbar, i):
-    pbar.update(i + 1)
+def tokenize(sentence, pbar=0, i=0):
+    if pbar != 0:
+        pbar.update(i + 1)
     return [w.lemma_ for w in lemmatizer(sentence.lower()) if not w.is_stop and not w.is_punct]
 
 
