@@ -103,8 +103,6 @@ weighted avg       0.68      0.69      0.67     74079
 
 ## Additional Notes
 
-- The project's code is provided in the Jupyter notebook [step-by-step-guide.ipynb](/Step-by-step-guide.ipynb), which contains detailed explanations and code snippets for each step.
-
 - The project utilizes various Python packages such as pandas, NLTK, scikit-learn, Matplotlib, seaborn, keras... . Make sure to install these packages, as mentioned in the requirements.txt file.
 
 ## Team Members
