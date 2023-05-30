@@ -9,9 +9,11 @@
    * visualization.ipynb
    
 2. #### Feature Engineering :
+    * nlp_preprocessing.ipynb
     * nlp_processing.ipynb
     * processed_preparing.ipynb
    
 3. #### Models Training :
+    * data_splitting.ipynb
     * model_building.ipynb
     * model_testing.ipynb
