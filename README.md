@@ -81,7 +81,7 @@ The data pre-processing step includes the following steps:
 ### Feature Engineering
 
 The feature engineering step includes the following steps:
-- **Gensim Vectorization**: Convert text to a matrix of TF-IDF features.
+- **Gensim Vectorization**: Convert text to a matrix of Gensim features.
 
 ### Model Training and Evaluation
 
