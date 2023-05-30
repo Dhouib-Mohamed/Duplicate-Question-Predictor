@@ -90,15 +90,15 @@ The model training and evaluation step includes the following steps:
 - **Model Training**: Train a classifier model using the training set.
 - **Model Evaluation**: Evaluate the model using the testing set.
   
-accuracy:   0.68513
-              precision    recall  f1-score   support
+       accuracy:   0.68513
+                 precision    recall  f1-score   support
 
-    Positive       0.72      0.82      0.76     45989
-    Negative       0.61      0.47      0.53     28090
+      Positive       0.72      0.82      0.76     45989
+      Negative       0.61      0.47      0.53     28090
 
-    accuracy                           0.69     74079
-   macro avg       0.66      0.64      0.65     74079
-weighted avg       0.68      0.69      0.67     74079
+      accuracy                           0.69     74079
+      macro avg      0.66      0.64      0.65     74079
+      weighted avg   0.68      0.69      0.67     74079
 
 
 ## Additional Notes
